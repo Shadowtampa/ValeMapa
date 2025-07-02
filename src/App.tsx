@@ -3,6 +3,7 @@ import { usePlaces } from './hooks/usePlaces';
 import { Map } from './components/Map';
 import { PlaceDetails } from './components/PlaceDetails';
 import { SearchFilters } from './components/SearchFilters';
+import { UserLocationBox } from './components/UserLocationBox';
 import type { Place, Category } from './types/Place';
 import './App.css';
 
@@ -11,6 +12,7 @@ function App() {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category>('todos');
   const [searchQuery, setSearchQuery] = useState('');
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
 
   // Filtrar lugares baseado na busca e categoria
   const filteredPlaces = useMemo(() => {
@@ -39,6 +41,10 @@ function App() {
 
   const handleCategoryFilter = (category: Category) => {
     setSelectedCategory(category);
+  };
+
+  const handleLocationChange = (lat: number, lng: number) => {
+    setUserLocation([lat, lng]);
   };
 
   if (loading) {
@@ -75,6 +81,7 @@ function App() {
 
       <main className="app-main">
         <div className="sidebar">
+          <UserLocationBox onLocationChange={handleLocationChange} />
           <SearchFilters
             onSearch={handleSearch}
             onCategoryFilter={handleCategoryFilter}
@@ -95,6 +102,7 @@ function App() {
               places={filteredPlaces}
               selectedPlace={selectedPlace}
               onPlaceSelect={handlePlaceSelect}
+              userLocation={userLocation}
             />
           </div>
 
