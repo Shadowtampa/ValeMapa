@@ -8,28 +8,34 @@ import type { Place, Category } from './types/Place';
 import './App.css';
 
 function App() {
-  const { places, loading, error, filterPlacesByCategory, searchPlaces } = usePlaces();
+  const { places, loading, error, filterPlacesByCategory, filterPlacesByValeTypes, searchPlaces, getAllValeTypes } = usePlaces();
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category>('todos');
   const [searchQuery, setSearchQuery] = useState('');
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+  const [selectedValeTypes, setSelectedValeTypes] = useState<string[]>([]);
 
-  // Filtrar lugares baseado na busca e categoria
+  // Filtrar lugares baseado na busca, categoria e tipos de vale
   const filteredPlaces = useMemo(() => {
     let filtered = places;
 
-    // Aplicar filtro de categoria
+    // Filtro por categoria
     if (selectedCategory !== 'todos') {
       filtered = filterPlacesByCategory(selectedCategory);
     }
 
-    // Aplicar busca
+    // Filtro por tipos de vale
+    if (selectedValeTypes.length > 0) {
+      filtered = filterPlacesByValeTypes(selectedValeTypes).filter(p => filtered.includes(p));
+    }
+
+    // Busca
     if (searchQuery.trim()) {
-      filtered = searchPlaces(searchQuery);
+      filtered = searchPlaces(searchQuery).filter(p => filtered.includes(p));
     }
 
     return filtered;
-  }, [places, selectedCategory, searchQuery, filterPlacesByCategory, searchPlaces]);
+  }, [places, selectedCategory, searchQuery, selectedValeTypes, filterPlacesByCategory, filterPlacesByValeTypes, searchPlaces]);
 
   const handlePlaceSelect = (place: Place) => {
     setSelectedPlace(place);
@@ -43,9 +49,15 @@ function App() {
     setSelectedCategory(category);
   };
 
+  const handleValeTypesChange = (valeTypes: string[]) => {
+    setSelectedValeTypes(valeTypes);
+  };
+
   const handleLocationChange = (lat: number, lng: number) => {
     setUserLocation([lat, lng]);
   };
+
+  const allValeTypes = getAllValeTypes();
 
   if (loading) {
     return (
@@ -86,6 +98,9 @@ function App() {
             onSearch={handleSearch}
             onCategoryFilter={handleCategoryFilter}
             selectedCategory={selectedCategory}
+            valeTypes={allValeTypes}
+            selectedValeTypes={selectedValeTypes}
+            onValeTypesChange={handleValeTypesChange}
           />
           
           <div className="stats">

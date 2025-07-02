@@ -36,6 +36,13 @@ export const usePlaces = () => {
     return places.filter(place => place.category === category);
   };
 
+  const filterPlacesByValeTypes = (valeTypes: string[]): Place[] => {
+    if (!valeTypes.length) return places;
+    return places.filter(place =>
+      valeTypes.every(type => place.valeType.map(v => v.toLowerCase()).includes(type.toLowerCase()))
+    );
+  };
+
   const searchPlaces = (query: string): Place[] => {
     const lowerQuery = query.toLowerCase();
     return places.filter(place => 
@@ -46,11 +53,20 @@ export const usePlaces = () => {
     );
   };
 
+  // Retorna todos os tipos de vale únicos
+  const getAllValeTypes = (): string[] => {
+    const set = new Set<string>();
+    places.forEach(place => place.valeType.forEach(type => set.add(type)));
+    return Array.from(set);
+  };
+
   return {
     places,
     loading,
     error,
     filterPlacesByCategory,
-    searchPlaces
+    filterPlacesByValeTypes,
+    searchPlaces,
+    getAllValeTypes
   };
 }; 
