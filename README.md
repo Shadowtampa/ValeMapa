@@ -1,69 +1,168 @@
-# React + TypeScript + Vite
+# 🍽️ ValeMapa
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Um localizador de lugares que aceitam Vale Alimentação, desenvolvido como uma aplicação serverless com interface moderna e responsiva.
 
-Currently, two official plugins are available:
+## ✨ Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Mapa Interativo**: Visualização de lugares em um mapa com pins coloridos
+- **Busca Inteligente**: Pesquisa por nome, endereço ou descrição dos estabelecimentos
+- **Filtros por Categoria**: Filtre por restaurantes, padarias, supermercados, cafés e pizzarias
+- **Detalhes Completos**: Informações detalhadas de cada lugar incluindo:
+  - Endereço completo
+  - Telefone de contato
+  - Horário de funcionamento
+  - Tipos de vale aceitos
+  - Descrição do estabelecimento
+- **Ações Rápidas**: Botões para abrir no Google Maps e fazer ligação
+- **Interface Responsiva**: Funciona perfeitamente em desktop, tablet e mobile
 
-## Expanding the ESLint configuration
+## 🚀 Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 19** - Framework principal
+- **TypeScript** - Tipagem estática
+- **Vite** - Build tool e dev server
+- **Canvas API** - Renderização do mapa
+- **CSS3** - Estilos modernos com gradientes e glassmorphism
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📁 Estrutura do Projeto
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+valeMapa/
+├── public/
+│   └── places.json          # Dados dos lugares (mapeamento manual)
+├── src/
+│   ├── components/
+│   │   ├── Map.tsx          # Componente do mapa interativo
+│   │   ├── PlaceDetails.tsx # Detalhes do lugar selecionado
+│   │   └── SearchFilters.tsx # Filtros e busca
+│   ├── hooks/
+│   │   └── usePlaces.ts     # Hook para gerenciar dados dos lugares
+│   ├── types/
+│   │   └── Place.ts         # Tipos TypeScript
+│   ├── App.tsx              # Componente principal
+│   ├── App.css              # Estilos da aplicação
+│   └── main.tsx             # Ponto de entrada
+└── package.json
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Como Executar
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Pré-requisitos
+- Node.js 18+ 
+- npm ou yarn
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Instalação
+```bash
+# Clone o repositório
+git clone <url-do-repositorio>
+cd valeMapa
+
+# Instale as dependências
+npm install
+
+# Execute em modo de desenvolvimento
+npm run dev
 ```
+
+### Build para Produção
+```bash
+npm run build
+npm run preview
+```
+
+## 📊 Estrutura dos Dados
+
+Os lugares são armazenados no arquivo `public/places.json` com a seguinte estrutura:
+
+```json
+{
+  "places": [
+    {
+      "id": 1,
+      "name": "Nome do Estabelecimento",
+      "address": "Endereço completo",
+      "city": "Cidade",
+      "state": "Estado",
+      "coordinates": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "category": "restaurante|padaria|supermercado|café|pizzaria",
+      "description": "Descrição do estabelecimento",
+      "acceptsVale": true,
+      "valeType": ["alimentação", "refeição"],
+      "phone": "(11) 9999-9999",
+      "hours": "Horário de funcionamento"
+    }
+  ]
+}
+```
+
+## 🎨 Características da Interface
+
+- **Design Moderno**: Interface com glassmorphism e gradientes
+- **Responsivo**: Adapta-se a diferentes tamanhos de tela
+- **Acessível**: Cores contrastantes e navegação por teclado
+- **Performance**: Renderização otimizada com Canvas API
+- **UX Intuitiva**: Feedback visual e interações suaves
+
+## 🔧 Personalização
+
+### Adicionando Novos Lugares
+
+1. Abra o arquivo `public/places.json`
+2. Adicione um novo objeto seguindo a estrutura acima
+3. Use coordenadas precisas (lat/lng) para posicionamento correto no mapa
+4. Categorize adequadamente o estabelecimento
+
+### Modificando Categorias
+
+Para adicionar novas categorias:
+
+1. Atualize o tipo `Category` em `src/types/Place.ts`
+2. Adicione a nova categoria no componente `SearchFilters.tsx`
+3. Atualize os dados em `places.json`
+
+### Customizando Estilos
+
+Os estilos principais estão em `src/App.css` e podem ser facilmente modificados para:
+- Alterar cores do tema
+- Modificar layout
+- Ajustar responsividade
+- Personalizar animações
+
+## 🌟 Funcionalidades Avançadas
+
+- **Filtros Combinados**: Busca e filtro de categoria funcionam em conjunto
+- **Tooltips Interativos**: Informações aparecem ao passar o mouse sobre os pins
+- **Estados de Loading**: Feedback visual durante carregamento
+- **Tratamento de Erros**: Mensagens amigáveis em caso de problemas
+- **Estatísticas em Tempo Real**: Contador de lugares encontrados
+
+## 📱 Compatibilidade
+
+- ✅ Chrome/Chromium
+- ✅ Firefox
+- ✅ Safari
+- ✅ Edge
+- ✅ Mobile browsers
+
+## 🤝 Contribuindo
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+
+## 📞 Suporte
+
+Se você encontrar algum problema ou tiver sugestões, abra uma issue no repositório.
+
+---
+
+**Desenvolvido com ❤️ para facilitar a busca por lugares que aceitam Vale Alimentação**

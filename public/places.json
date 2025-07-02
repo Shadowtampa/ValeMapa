@@ -1,0 +1,89 @@
+{
+  "places": [
+    {
+      "id": 1,
+      "name": "Restaurante Bom Sabor",
+      "address": "Rua das Flores, 123 - Centro",
+      "city": "São Paulo",
+      "state": "SP",
+      "coordinates": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "category": "restaurante",
+      "description": "Restaurante tradicional com pratos da culinária brasileira",
+      "acceptsVale": true,
+      "valeType": ["alimentação", "refeição"],
+      "phone": "(11) 9999-9999",
+      "hours": "Seg-Sex: 11h-22h, Sáb-Dom: 12h-23h"
+    },
+    {
+      "id": 2,
+      "name": "Padaria Doce Lar",
+      "address": "Av. Paulista, 456 - Bela Vista",
+      "city": "São Paulo",
+      "state": "SP",
+      "coordinates": {
+        "lat": -23.5631,
+        "lng": -46.6544
+      },
+      "category": "padaria",
+      "description": "Padaria artesanal com pães frescos e doces caseiros",
+      "acceptsVale": true,
+      "valeType": ["alimentação"],
+      "phone": "(11) 8888-8888",
+      "hours": "Seg-Sáb: 6h-20h, Dom: 7h-18h"
+    },
+    {
+      "id": 3,
+      "name": "Supermercado Econômico",
+      "address": "Rua Augusta, 789 - Consolação",
+      "city": "São Paulo",
+      "state": "SP",
+      "coordinates": {
+        "lat": -23.5489,
+        "lng": -46.6388
+      },
+      "category": "supermercado",
+      "description": "Supermercado com variedade de produtos e preços acessíveis",
+      "acceptsVale": true,
+      "valeType": ["alimentação"],
+      "phone": "(11) 7777-7777",
+      "hours": "Seg-Sáb: 7h-22h, Dom: 8h-20h"
+    },
+    {
+      "id": 4,
+      "name": "Café Aroma",
+      "address": "Rua Oscar Freire, 321 - Jardins",
+      "city": "São Paulo",
+      "state": "SP",
+      "coordinates": {
+        "lat": -23.5671,
+        "lng": -46.6734
+      },
+      "category": "café",
+      "description": "Café especializado com ambiente aconchegante",
+      "acceptsVale": true,
+      "valeType": ["alimentação"],
+      "phone": "(11) 6666-6666",
+      "hours": "Seg-Sex: 7h-19h, Sáb-Dom: 8h-18h"
+    },
+    {
+      "id": 5,
+      "name": "Pizzaria Bella Napoli",
+      "address": "Rua 13 de Maio, 654 - Bixiga",
+      "city": "São Paulo",
+      "state": "SP",
+      "coordinates": {
+        "lat": -23.5612,
+        "lng": -46.6565
+      },
+      "category": "pizzaria",
+      "description": "Pizzaria italiana autêntica com forno a lenha",
+      "acceptsVale": true,
+      "valeType": ["alimentação", "refeição"],
+      "phone": "(11) 5555-5555",
+      "hours": "Ter-Dom: 18h-23h"
+    }
+  ]
+} 
