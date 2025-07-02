@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { usePlaces } from './hooks/usePlaces';
 import { Map } from './components/Map';
 import { PlaceDetails } from './components/PlaceDetails';
@@ -7,6 +7,9 @@ import { UserLocationBox } from './components/UserLocationBox';
 import type { Place, Category } from './types/Place';
 import './App.css';
 
+const LOCALSTORAGE_LOCATION_KEY = 'valemapa_user_location';
+const LOCALSTORAGE_VALETYPES_KEY = 'valemapa_selected_valetypes';
+
 function App() {
   const { places, loading, error, filterPlacesByCategory, filterPlacesByValeTypes, searchPlaces, getAllValeTypes } = usePlaces();
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
@@ -14,6 +17,40 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const [selectedValeTypes, setSelectedValeTypes] = useState<string[]>([]);
+
+  // Carregar preferências do localStorage ao iniciar
+  useEffect(() => {
+    const loc = localStorage.getItem(LOCALSTORAGE_LOCATION_KEY);
+    if (loc) {
+      try {
+        const [lat, lng] = JSON.parse(loc);
+        if (typeof lat === 'number' && typeof lng === 'number') {
+          setUserLocation([lat, lng]);
+        }
+      } catch {}
+    }
+    const vales = localStorage.getItem(LOCALSTORAGE_VALETYPES_KEY);
+    if (vales) {
+      try {
+        const arr = JSON.parse(vales);
+        if (Array.isArray(arr)) {
+          setSelectedValeTypes(arr);
+        }
+      } catch {}
+    }
+  }, []);
+
+  // Salvar localização no localStorage
+  useEffect(() => {
+    if (userLocation) {
+      localStorage.setItem(LOCALSTORAGE_LOCATION_KEY, JSON.stringify(userLocation));
+    }
+  }, [userLocation]);
+
+  // Salvar tipos de vale selecionados no localStorage
+  useEffect(() => {
+    localStorage.setItem(LOCALSTORAGE_VALETYPES_KEY, JSON.stringify(selectedValeTypes));
+  }, [selectedValeTypes]);
 
   // Filtrar lugares baseado na busca, categoria e tipos de vale
   const filteredPlaces = useMemo(() => {
