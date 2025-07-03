@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Category } from '../types/Place';
 
@@ -31,7 +31,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         if (typeof lat === 'number' && typeof lng === 'number') {
           setUserLocationState([lat, lng]);
         }
-      } catch {}
+      } catch (error) {
+        console.error('Erro ao carregar localização do localStorage:', error);
+      }
     }
     const vales = localStorage.getItem(LOCALSTORAGE_VALETYPES_KEY);
     if (vales) {
@@ -40,7 +42,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         if (Array.isArray(arr)) {
           setSelectedValeTypesState(arr);
         }
-      } catch {}
+      } catch (error) {
+        console.error('Erro ao carregar tipos de vale do localStorage:', error);
+      }
     }
     const cat = localStorage.getItem(LOCALSTORAGE_CATEGORY_KEY);
     if (cat) {

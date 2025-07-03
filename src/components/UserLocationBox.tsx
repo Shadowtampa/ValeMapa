@@ -35,7 +35,7 @@ export const UserLocationBox: React.FC = () => {
         setShowForm(false);
         setLoading(false);
       },
-      (err) => {
+      () => {
         setError('Não foi possível obter sua localização.');
         setLoading(false);
       }
@@ -61,7 +61,7 @@ export const UserLocationBox: React.FC = () => {
         setError('Endereço não encontrado. Tente ser mais específico.');
       }
     } catch (err) {
-      setError('Erro ao buscar endereço.');
+      setError('Erro ao buscar endereço.' + err);
     } finally {
       setLoading(false);
     }

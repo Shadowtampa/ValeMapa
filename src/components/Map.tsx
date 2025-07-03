@@ -51,7 +51,7 @@ const CenterMap: React.FC<{ center: [number, number] }> = ({ center }) => {
   return null;
 };
 
-export const Map: React.FC<MapProps> = ({ places, selectedPlace, onPlaceSelect, userLocation }) => {
+export const Map: React.FC<MapProps> = ({ places, onPlaceSelect, userLocation }) => {
   // Centraliza o mapa em SP por padrão
   const defaultCenter: [number, number] = [-23.55, -46.63];
   const center = userLocation || defaultCenter;

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { usePlaces } from './hooks/usePlaces';
 import { Map } from './components/Map';
 import { PlaceDetails } from './components/PlaceDetails';
@@ -11,7 +11,7 @@ const LOCALSTORAGE_LOCATION_KEY = 'valemapa_user_location';
 const LOCALSTORAGE_VALETYPES_KEY = 'valemapa_selected_valetypes';
 
 function App() {
-  const { places, loading, error, filterPlacesByCategory, filterPlacesByValeTypes, searchPlaces, getAllValeTypes } = usePlaces();
+  const { places, loading, error, getAllValeTypes } = usePlaces();
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category>('todos');
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,7 +29,9 @@ function App() {
         if (typeof lat === 'number' && typeof lng === 'number') {
           setUserLocation([lat, lng]);
         }
-      } catch {}
+      } catch (error) {
+        console.error('Erro ao carregar localização do localStorage:', error);
+      }
     }
     const vales = localStorage.getItem(LOCALSTORAGE_VALETYPES_KEY);
     if (vales) {
@@ -38,7 +40,9 @@ function App() {
         if (Array.isArray(arr)) {
           setSelectedValeTypes(arr);
         }
-      } catch {}
+      } catch (error) {
+        console.error('Erro ao carregar tipos de vale do localStorage:', error);
+      }
     }
   }, []);
 
@@ -116,10 +120,6 @@ function App() {
     setSelectedValeBrands(brands);
   };
 
-  const handleLocationChange = (lat: number, lng: number) => {
-    setUserLocation([lat, lng]);
-  };
-
   const handleSearchRadiusChange = (radius: number) => {
     setSearchRadius(radius);
   };
@@ -161,7 +161,7 @@ function App() {
 
       <main className="app-main">
         <div className="sidebar">
-          <UserLocationBox onLocationChange={handleLocationChange} />
+          <UserLocationBox />
           <SearchFilters
             onSearch={handleSearch}
             onCategoryFilter={handleCategoryFilter}
