@@ -170,7 +170,9 @@
       "coordinates": { "lat": -2.4280664421487486, "lng": -54.74294015460663 },
       "category": "padaria",
       "valeType": ["refeição"],
-      "valeBrands": ["flash"]
+      "valeBrands": ["flash"],
+      "acceptsVale": true
+
     },
     {
       "id": 13,

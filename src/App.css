@@ -984,6 +984,15 @@ body[data-theme='dark'] .category-filter.active .category-label {
     font-size: 0.75rem;
     padding: 0.4rem 0.8rem;
   }
+
+  .category-filters {
+    grid-template-columns: 1fr !important;
+  }
+
+  .category-filter {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
 
 /* FAB Theme Toggle */
