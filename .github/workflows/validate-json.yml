@@ -1,0 +1,91 @@
+name: Validar JSON das Localizações
+
+on:
+  push:
+    paths:
+      - 'public/places.json'
+  pull_request:
+    paths:
+      - 'public/places.json'
+
+jobs:
+  validate-json:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+      
+    - name: Validar JSON
+      run: |
+        echo "🔍 Validando estrutura do JSON..."
+        node -e "
+          try {
+            const data = JSON.parse(require('fs').readFileSync('public/places.json', 'utf8'));
+            
+            if (!data.places || !Array.isArray(data.places)) {
+              throw new Error('Estrutura inválida: deve ter um array "places"');
+            }
+            
+            console.log('✅ JSON válido!');
+            console.log('📊 Total de localizações:', data.places.length);
+            
+            // Verificar IDs únicos
+            const ids = data.places.map(p => p.id);
+            const uniqueIds = [...new Set(ids)];
+            
+            if (ids.length !== uniqueIds.length) {
+              throw new Error('IDs duplicados encontrados!');
+            }
+            
+            console.log('✅ Todos os IDs são únicos');
+            
+            // Verificar estrutura básica
+            data.places.forEach((place, index) => {
+              const required = ['id', 'name', 'address', 'city', 'state', 'coordinates', 'category'];
+              const missing = required.filter(field => !place[field]);
+              
+              if (missing.length > 0) {
+                throw new Error(\`Localização \${index + 1} (ID: \${place.id}) está faltando: \${missing.join(', ')}\`);
+              }
+              
+              if (!place.coordinates.lat || !place.coordinates.lng) {
+                throw new Error(\`Localização \${index + 1} (ID: \${place.id}) tem coordenadas inválidas\`);
+              }
+            });
+            
+            console.log('✅ Todas as localizações têm estrutura válida');
+            
+          } catch (error) {
+            console.error('❌ Erro na validação:', error.message);
+            process.exit(1);
+          }
+        "
+        
+    - name: Verificar formatação
+      run: |
+        echo "🎨 Verificando formatação..."
+        node -e "
+          const fs = require('fs');
+          const original = fs.readFileSync('public/places.json', 'utf8');
+          const formatted = JSON.stringify(JSON.parse(original), null, 2);
+          
+          if (original !== formatted) {
+            console.log('⚠️  JSON não está formatado corretamente');
+            console.log('💡 Execute: npm run format ou formate manualmente');
+          } else {
+            console.log('✅ Formatação está correta');
+          }
+        "
+        
+    - name: Relatório de Validação
+      run: |
+        echo "📋 Relatório de Validação"
+        echo "========================"
+        echo "✅ JSON sintaticamente válido"
+        echo "✅ Estrutura de dados correta"
+        echo "✅ IDs únicos verificados"
+        echo "✅ Coordenadas presentes"
+        echo "✅ Campos obrigatórios preenchidos"
+        echo ""
+        echo "🎉 Validação concluída com sucesso!" 

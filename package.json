@@ -12,7 +12,9 @@
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "validate:json": "node -e \"try { const data = JSON.parse(require('fs').readFileSync('public/places.json', 'utf8')); if (!data.places || !Array.isArray(data.places)) throw new Error('Estrutura inválida'); const ids = data.places.map(p => p.id); if (ids.length !== [...new Set(ids)].length) throw new Error('IDs duplicados'); console.log('✅ JSON válido! Total de localizações:', data.places.length); } catch (e) { console.error('❌ Erro:', e.message); process.exit(1); }\"",
+    "format:json": "node -e \"const fs = require('fs'); const data = JSON.parse(fs.readFileSync('public/places.json', 'utf8')); fs.writeFileSync('public/places.json', JSON.stringify(data, null, 2)); console.log('✅ JSON formatado!');\""
   },
   "dependencies": {
     "@types/leaflet": "^1.9.19",

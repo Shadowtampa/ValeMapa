@@ -149,11 +149,38 @@ Os estilos principais estão em `src/App.css` e podem ser facilmente modificados
 
 ## 🤝 Contribuindo
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+O ValeMapa é um projeto open source e adoramos receber contribuições da comunidade! 
+
+### 📚 Guias de Contribuição
+
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guia completo de como contribuir
+- **[docs/ADICIONAR_LOCALIZACOES.md](docs/ADICIONAR_LOCALIZACOES.md)** - Passo a passo para adicionar localizações
+
+### 🚀 Como Começar
+
+1. **Fork** o projeto
+2. **Clone** seu fork localmente
+3. **Crie uma branch** para sua feature
+4. **Faça suas alterações**
+5. **Teste** localmente
+6. **Commit** e **push** suas mudanças
+7. **Abra um Pull Request**
+
+### 📍 Adicionando Localizações
+
+Para adicionar novos estabelecimentos que aceitam Vale Alimentação:
+
+1. Siga o [guia detalhado](docs/ADICIONAR_LOCALIZACOES.md)
+2. Use o [template de issue](.github/ISSUE_TEMPLATE/new_location.md) para reportar
+3. Ou faça diretamente via Pull Request
+
+### 🐛 Reportando Bugs
+
+Use o [template de bug report](.github/ISSUE_TEMPLATE/bug_report.md) para reportar problemas.
+
+### 💡 Sugerindo Melhorias
+
+Use o [template de feature request](.github/ISSUE_TEMPLATE/feature_request.md) para sugerir novas funcionalidades.
 
 ## 📄 Licença
 

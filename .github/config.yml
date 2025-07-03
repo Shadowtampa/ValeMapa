@@ -1,0 +1,46 @@
+# Configuração para facilitar contribuições
+# Este arquivo configura como o GitHub apresenta o projeto
+
+# Configuração de labels padrão
+labels:
+  - name: "bug"
+    color: "d73a4a"
+    description: "Algo não está funcionando"
+  - name: "enhancement"
+    color: "a2eeef"
+    description: "Nova funcionalidade ou melhoria"
+  - name: "location"
+    color: "0075ca"
+    description: "Nova localização adicionada"
+  - name: "documentation"
+    color: "0075ca"
+    description: "Melhorias na documentação"
+  - name: "good first issue"
+    color: "7057ff"
+    description: "Boa para iniciantes"
+  - name: "help wanted"
+    color: "008672"
+    description: "Precisa de ajuda extra"
+  - name: "question"
+    color: "d876e3"
+    description: "Pergunta sobre o projeto"
+
+# Configuração de branches padrão
+branches:
+  - name: main
+    protection:
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: true
+      required_status_checks:
+        strict: true
+        contexts: []
+      enforce_admins: false
+      allow_force_pushes: false
+      allow_deletions: false
+
+# Configuração de pull requests
+pull_request_reviews:
+  required_approving_review_count: 1
+  dismiss_stale_reviews: true
+  require_code_owner_reviews: false 
