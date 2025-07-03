@@ -96,7 +96,7 @@
       "address": "Av. Sérgio Henn, 1604",
       "city": "Santarém",
       "state": "PA",
-      "coordinates": { "lat": -2.433748, "lng": -54.719670 },
+      "coordinates": { "lat": -2.433748, "lng": -54.71967 },
       "category": "supermercado",
       "description": "Parque da Cidade",
       "acceptsVale": true,
@@ -119,6 +119,58 @@
       "valeBrands": ["flash"],
       "phone": "",
       "hours": ""
+    },
+    {
+      "id": 9,
+      "name": "Avante",
+      "address": "Tv. Assis de Vasconcelos, 1-165 - Aldeia, Santarém - PA, 68040-510",
+      "city": "Santarém",
+      "state": "PA",
+      "valeType": ["refeição"],
+      "description": "Avante Assis de Vasconcelos",
+      "valeBrands": ["flash"],
+      "coordinates": { "lat": -2.4283170207005447, "lng": -54.72376303118168 }
+    },
+    {
+      "id": 10,
+      "name": "Avante",
+      "address": "Av. Moaçara - Diamantino, Santarém - PA, 68025-740",
+      "city": "Santarém",
+      "state": "PA",
+      "coordinates": { "lat": -2.450639960628367, "lng": -54.70361751793176 },
+      "category": "supermercado",
+      "description": "Avante Moaçara",
+      "acceptsVale": true,
+      "valeType": ["refeição"],
+      "valeBrands": ["flash"],
+      "phone": "",
+      "hours": ""
+    },
+    {
+      "id": 11,
+      "name": "Pizzaria Massabor",
+      "address": "BR-163, 1450 - Caranazal, Santarém - PA, 68040-400",
+      "city": "Santarém",
+      "state": "PA",
+      "coordinates": { "lat": -2.428783212710179, "lng": -54.7331464978685 },
+      "category": "supermercado",
+      "description": "A pizzaria oferece pizzas de vários sabores, além de salgados e doces, em ambiente familiar e descontraído.",
+      "acceptsVale": true,
+      "valeType": ["refeição"],
+      "valeBrands": ["flash"],
+      "phone": "",
+      "hours": "093991227116"
+    },
+    {
+      "id": 12,
+      "name": "Pão da Santa",
+      "address": "R. Pres. Kenedy, 44 - Liberdade, Santarém - PA, 68040-170",
+      "city": "Santarém",
+      "state": "PA",
+      "coordinates": { "lat": -2.4280664421487486, "lng": -54.74294015460663 },
+      "category": "supermercado",
+      "valeType": ["refeição"],
+      "valeBrands": ["flash"]
     }
   ]
-} 
+}
