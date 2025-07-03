@@ -1,1 +1,2 @@
+npm run test || { echo '❌ Os testes falharam! Corrija os erros antes de commitar.'; exit 1; } 
 npm run build || { echo '❌ O build falhou! Corrija os erros antes de commitar.'; exit 1; } 

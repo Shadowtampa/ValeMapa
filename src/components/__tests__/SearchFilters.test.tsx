@@ -127,7 +127,7 @@ describe('SearchFilters Component', () => {
   it('renderiza as instruções de uso', () => {
     render(<SearchFilters {...defaultProps} />)
     
-    expect(screen.getByText('💡 Como usar:')).toBeInTheDocument()
+    expect(screen.getByText('Como usar')).toBeInTheDocument()
     expect(screen.getByText(/Use a busca para encontrar lugares/)).toBeInTheDocument()
     expect(screen.getByText(/Filtre por categoria/)).toBeInTheDocument()
   })
@@ -135,12 +135,12 @@ describe('SearchFilters Component', () => {
   it('não renderiza seção de tipos de vale quando não há tipos', () => {
     render(<SearchFilters {...defaultProps} valeTypes={[]} />)
     
-    expect(screen.queryByText('Filtrar por tipo de vale:')).not.toBeInTheDocument()
+    expect(screen.queryByText('Tipos de Vale')).not.toBeInTheDocument()
   })
 
   it('não renderiza seção de marcas quando não há marcas', () => {
     render(<SearchFilters {...defaultProps} valeBrands={[]} />)
     
-    expect(screen.queryByText('Filtrar por marca do vale:')).not.toBeInTheDocument()
+    expect(screen.queryByText('Marcas do Vale')).not.toBeInTheDocument()
   })
 }) 

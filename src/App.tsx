@@ -1,62 +1,24 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { usePlaces } from './hooks/usePlaces';
 import { Map } from './components/Map';
 import { PlaceDetails } from './components/PlaceDetails';
 import { SearchFilters } from './components/SearchFilters';
 import { UserLocationBox } from './components/UserLocationBox';
+import { useAppContext } from './context/AppContext';
 import type { Place, Category } from './types/Place';
 import './App.css';
 
-const LOCALSTORAGE_LOCATION_KEY = 'valemapa_user_location';
-const LOCALSTORAGE_VALETYPES_KEY = 'valemapa_selected_valetypes';
+
 
 function App() {
   const { places, loading, error, getAllValeTypes } = usePlaces();
+  const { userLocation, selectedCategory, setSelectedCategory, selectedValeTypes, setSelectedValeTypes } = useAppContext();
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<Category>('todos');
   const [searchQuery, setSearchQuery] = useState('');
-  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
-  const [selectedValeTypes, setSelectedValeTypes] = useState<string[]>([]);
   const [selectedValeBrands, setSelectedValeBrands] = useState<string[]>([]);
   const [searchRadius, setSearchRadius] = useState<number>(10);
 
-  // Carregar preferências do localStorage ao iniciar
-  useEffect(() => {
-    const loc = localStorage.getItem(LOCALSTORAGE_LOCATION_KEY);
-    if (loc) {
-      try {
-        const [lat, lng] = JSON.parse(loc);
-        if (typeof lat === 'number' && typeof lng === 'number') {
-          setUserLocation([lat, lng]);
-        }
-      } catch (error) {
-        console.error('Erro ao carregar localização do localStorage:', error);
-      }
-    }
-    const vales = localStorage.getItem(LOCALSTORAGE_VALETYPES_KEY);
-    if (vales) {
-      try {
-        const arr = JSON.parse(vales);
-        if (Array.isArray(arr)) {
-          setSelectedValeTypes(arr);
-        }
-      } catch (error) {
-        console.error('Erro ao carregar tipos de vale do localStorage:', error);
-      }
-    }
-  }, []);
 
-  // Salvar localização no localStorage
-  useEffect(() => {
-    if (userLocation) {
-      localStorage.setItem(LOCALSTORAGE_LOCATION_KEY, JSON.stringify(userLocation));
-    }
-  }, [userLocation]);
-
-  // Salvar tipos de vale selecionados no localStorage
-  useEffect(() => {
-    localStorage.setItem(LOCALSTORAGE_VALETYPES_KEY, JSON.stringify(selectedValeTypes));
-  }, [selectedValeTypes]);
 
   // Função para calcular distância entre dois pontos (Haversine)
   function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {

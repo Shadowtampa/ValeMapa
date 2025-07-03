@@ -75,37 +75,76 @@ export const UserLocationBox: React.FC = () => {
   };
 
   return (
-    <div style={{ marginBottom: '1rem' }}>
-      <h3>Minha localização</h3>
+    <div className="user-location-box">
+      <h3>
+        <span className="location-icon">📍</span>
+        Minha Localização
+      </h3>
+      
       {showForm ? (
-        <>
-          <button type="button" onClick={handleGetLocation} disabled={loading} style={{ marginBottom: '0.5rem' }}>
+        <div className="location-form">
+          <button 
+            type="button" 
+            onClick={handleGetLocation} 
+            disabled={loading}
+            className="location-btn primary"
+          >
+            <span className="btn-icon">🌍</span>
             {loading ? 'Buscando localização...' : 'Usar minha localização'}
           </button>
-          <form onSubmit={handleAddressSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
-            <input
-              type="text"
-              placeholder="Digite um endereço ou nome de lugar"
-              value={address}
-              onChange={e => setAddress(e.target.value)}
-            />
-            <button type="submit" disabled={loading || !address.trim()}>
+          
+          <div className="divider">
+            <span>ou</span>
+          </div>
+          
+          <form onSubmit={handleAddressSubmit} className="address-form">
+            <div className="input-group">
+              <span className="input-icon">🏠</span>
+              <input
+                type="text"
+                placeholder="Digite um endereço ou nome de lugar"
+                value={address}
+                onChange={e => setAddress(e.target.value)}
+                className="address-input"
+              />
+            </div>
+            <button 
+              type="submit" 
+              disabled={loading || !address.trim()}
+              className="location-btn secondary"
+            >
+              <span className="btn-icon">🔍</span>
               {loading ? 'Buscando endereço...' : 'Buscar endereço'}
             </button>
           </form>
-          {error && <div style={{ color: 'red', marginTop: '0.5rem' }}>{error}</div>}
-        </>
+          
+          {error && (
+            <div className="error-message">
+              <span className="error-icon">⚠️</span>
+              {error}
+            </div>
+          )}
+        </div>
       ) : (
-        <div style={{ margin: '0.5rem 0' }}>
-          <div style={{ fontSize: '0.95rem', marginBottom: '0.5rem' }}>
-            <strong>Localização escolhida:</strong><br />
-            {chosenLocation?.address ? (
-              <span>{chosenLocation.address}</span>
-            ) : (
-              <span>Lat: {chosenLocation?.lat.toFixed(6)}, Lng: {chosenLocation?.lng.toFixed(6)}</span>
-            )}
+        <div className="location-display">
+          <div className="location-info">
+            <div className="location-label">Localização escolhida:</div>
+            <div className="location-value">
+              {chosenLocation?.address ? (
+                <span>{chosenLocation.address}</span>
+              ) : (
+                <span>
+                  Lat: {chosenLocation?.lat.toFixed(6)}, Lng: {chosenLocation?.lng.toFixed(6)}
+                </span>
+              )}
+            </div>
           </div>
-          <button type="button" onClick={handleChangeLocation}>
+          <button 
+            type="button" 
+            onClick={handleChangeLocation}
+            className="location-btn secondary"
+          >
+            <span className="btn-icon">🔄</span>
             Trocar localização
           </button>
         </div>

@@ -31,7 +31,7 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
 
   const categories: { value: Category; label: string; icon: string }[] = [
-    { value: 'todos', label: 'Todos', icon: '📍' },
+    { value: 'todos', label: 'Todos', icon: '🌍' },
     { value: 'restaurante', label: 'Restaurantes', icon: '🍽️' },
     { value: 'padaria', label: 'Padarias', icon: '🥖' },
     { value: 'supermercado', label: 'Supermercados', icon: '🛒' },
@@ -74,17 +74,23 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
   return (
     <div className="search-filters">
       <div className="search-section">
-        <input
-          type="text"
-          placeholder="Buscar lugares..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="search-input"
-        />
+        <div className="search-input-wrapper">
+          <span className="search-icon">🔍</span>
+          <input
+            type="text"
+            placeholder="Buscar lugares..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="search-input"
+          />
+        </div>
       </div>
 
       <div className="filters-section">
-        <h3>Filtrar por categoria:</h3>
+        <h3>
+          <span className="filter-icon">🏷️</span>
+          Categorias
+        </h3>
         <div className="category-filters">
           {categories.map((category) => (
             <button
@@ -100,18 +106,22 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
       </div>
 
       {valeTypes.length > 0 && (
-        <div className="filters-section" style={{ marginTop: '1rem' }}>
-          <h3>Filtrar por tipo de vale:</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+        <div className="filters-section">
+          <h3>
+            <span className="filter-icon">💳</span>
+            Tipos de Vale
+          </h3>
+          <div className="checkbox-group">
             {valeTypes.map(type => (
-              <label key={type} style={{ fontSize: '0.95rem', cursor: 'pointer' }}>
+              <label key={type} className="checkbox-item">
                 <input
                   type="checkbox"
                   checked={selectedValeTypes.includes(type)}
                   onChange={() => handleValeTypeChange(type)}
-                  style={{ marginRight: '0.5rem' }}
+                  className="custom-checkbox"
                 />
-                {type}
+                <span className="checkmark"></span>
+                <span className="checkbox-label">{type}</span>
               </label>
             ))}
           </div>
@@ -119,18 +129,22 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
       )}
 
       {valeBrands.length > 0 && (
-        <div className="filters-section" style={{ marginTop: '1rem' }}>
-          <h3>Filtrar por marca do vale:</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+        <div className="filters-section">
+          <h3>
+            <span className="filter-icon">🏢</span>
+            Marcas do Vale
+          </h3>
+          <div className="checkbox-group">
             {valeBrands.map(brand => (
-              <label key={brand} style={{ fontSize: '0.95rem', cursor: 'pointer' }}>
+              <label key={brand} className="checkbox-item">
                 <input
                   type="checkbox"
                   checked={selectedValeBrands.includes(brand)}
                   onChange={() => handleValeBrandChange(brand)}
-                  style={{ marginRight: '0.5rem' }}
+                  className="custom-checkbox"
                 />
-                {brand}
+                <span className="checkmark"></span>
+                <span className="checkbox-label">{brand}</span>
               </label>
             ))}
           </div>
@@ -138,17 +152,29 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
       )}
 
       <div className="filters-section">
-        <h3>Filtrar por raio de busca:</h3>
-        <select value={searchRadius} onChange={e => onSearchRadiusChange(Number(e.target.value))} style={{ marginBottom: '1rem', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ddd' }}>
-          {radiusOptions.map(opt => (
-            <option key={opt} value={opt}>{opt} km</option>
-          ))}
-        </select>
+        <h3>
+          <span className="filter-icon">📏</span>
+          Raio de Busca
+        </h3>
+        <div className="radius-selector">
+          <select 
+            value={searchRadius} 
+            onChange={e => onSearchRadiusChange(Number(e.target.value))}
+            className="radius-select"
+          >
+            {radiusOptions.map(opt => (
+              <option key={opt} value={opt}>{opt} km</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="info-section">
         <div className="info-card">
-          <h4>💡 Como usar:</h4>
+          <h4>
+            <span className="info-icon">💡</span>
+            Como usar
+          </h4>
           <ul>
             <li>Use a busca para encontrar lugares por nome, endereço ou descrição</li>
             <li>Filtre por categoria para ver apenas tipos específicos de estabelecimentos</li>
