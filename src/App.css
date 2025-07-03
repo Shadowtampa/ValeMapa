@@ -1099,3 +1099,19 @@ body[data-theme='dark'] .location-icon {
   opacity: 0.85;
   color: #4f8cff;
 }
+body[data-theme='dark'] .checkbox-label {
+  color: #b3d8ff !important;
+}
+body[data-theme='dark'] .filters-section h3,
+body[data-theme='dark'] .user-location-box h3 {
+  color: #b3d8ff !important;
+  font-weight: 700;
+}
+body[data-theme='dark'] .location-label {
+  color: #b3d8ff !important;
+  font-weight: 700;
+}
+body[data-theme='dark'] .info-card h4 {
+  color: #b3d8ff !important;
+  font-weight: 700;
+}
