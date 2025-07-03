@@ -20,11 +20,11 @@ body {
 
 /* Header */
 .app-header {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  background: linear-gradient(135deg, #4f8cff 0%, #235390 100%);
   color: white;
-  padding: 1.5rem;
+  padding: 2.5rem 1rem 2rem 1rem;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.10);
   position: relative;
   overflow: hidden;
 }
@@ -36,18 +36,10 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%), 
-              linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%), 
-              linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.1) 75%), 
-              linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.1) 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-  animation: headerPattern 20s linear infinite;
-}
-
-@keyframes headerPattern {
-  0% { background-position: 0 0, 0 10px, 10px -10px, -10px 0px; }
-  100% { background-position: 20px 20px, 20px 30px, 30px 10px, 10px 20px; }
+  background: radial-gradient(circle at 60% 40%, rgba(179,216,255,0.18) 0%, transparent 70%),
+              radial-gradient(circle at 30% 70%, rgba(179,216,255,0.12) 0%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .header-content {
@@ -56,18 +48,29 @@ body {
 }
 
 .header-content h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 0.5rem;
-  font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  font-weight: 800;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 1px 0 #fff2;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
   animation: fadeInDown 0.8s ease-out;
 }
 
+.header-content h1 .header-emoji {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 8px rgba(79,140,255,0.25));
+}
+
 .header-content p {
-  font-size: 1.1rem;
-  opacity: 0.9;
+  font-size: 1.25rem;
+  opacity: 0.95;
   font-weight: 300;
   animation: fadeInUp 0.8s ease-out 0.2s both;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
 
 @keyframes fadeInDown {
@@ -492,6 +495,24 @@ body {
   color: white;
   border-color: #667eea;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.category-label {
+  font-weight: 600;
+  color: #235390;
+  transition: color 0.2s;
+}
+
+.category-filter.active .category-label {
+  color: #fff !important;
+}
+
+body[data-theme='dark'] .category-label {
+  color: #b3d8ff;
+}
+
+body[data-theme='dark'] .category-filter.active .category-label {
+  color: #fff !important;
 }
 
 /* Info section */
@@ -963,4 +984,118 @@ body {
     font-size: 0.75rem;
     padding: 0.4rem 0.8rem;
   }
+}
+
+/* FAB Theme Toggle */
+.fab-theme-toggle {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 1000;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f8cff 0%, #235390 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 24px rgba(79,140,255,0.25);
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+.fab-theme-toggle:hover {
+  background: linear-gradient(135deg, #235390 0%, #4f8cff 100%);
+  box-shadow: 0 8px 32px rgba(35,83,144,0.25);
+  transform: scale(1.08);
+}
+
+/* Modo Escuro */
+body[data-theme='dark'] {
+  background: linear-gradient(135deg, #1a2636 0%, #22304a 100%) !important;
+  color: #e6e6e6;
+}
+body[data-theme='dark'] .app-header {
+  background: linear-gradient(135deg, #22304a 0%, #1a2636 100%);
+}
+body[data-theme='dark'] .app-header::before {
+  background: radial-gradient(circle at 60% 40%, rgba(79,140,255,0.10) 0%, transparent 70%),
+              radial-gradient(circle at 30% 70%, rgba(79,140,255,0.08) 0%, transparent 80%);
+}
+body[data-theme='dark'] .header-content h1 .header-emoji {
+  filter: drop-shadow(0 2px 8px rgba(79,140,255,0.35));
+}
+body[data-theme='dark'] .header-content p {
+  color: #e6e6e6;
+}
+body[data-theme='dark'] .sidebar,
+body[data-theme='dark'] .map-section,
+body[data-theme='dark'] .details-section,
+body[data-theme='dark'] .user-location-box,
+body[data-theme='dark'] .info-card,
+body[data-theme='dark'] .location-info {
+  background: rgba(34, 48, 74, 0.98) !important;
+  color: #e6e6e6;
+  border-color: #2c3e50 !important;
+  box-shadow: 0 4px 24px rgba(35,83,144,0.10);
+}
+body[data-theme='dark'] .search-input,
+body[data-theme='dark'] .address-input,
+body[data-theme='dark'] .radius-select {
+  background: #22304a !important;
+  color: #e6e6e6;
+  border-color: #2c3e50;
+}
+body[data-theme='dark'] .search-input:focus,
+body[data-theme='dark'] .address-input:focus,
+body[data-theme='dark'] .radius-select:focus {
+  border-color: #4f8cff;
+  box-shadow: 0 0 0 3px rgba(79,140,255,0.10);
+}
+body[data-theme='dark'] .category-filter {
+  background: #22304a;
+  color: #e6e6e6;
+  border-color: #2c3e50;
+}
+body[data-theme='dark'] .category-filter.active {
+  background: linear-gradient(135deg, #4f8cff 0%, #235390 100%);
+  color: #fff;
+  border-color: #4f8cff;
+}
+body[data-theme='dark'] .stat-item {
+  background: linear-gradient(135deg, #235390 0%, #4f8cff 100%);
+  color: #fff;
+}
+body[data-theme='dark'] .btn-primary {
+  background: linear-gradient(135deg, #4f8cff 0%, #235390 100%);
+  color: #fff;
+}
+body[data-theme='dark'] .btn-secondary,
+body[data-theme='dark'] .location-btn.secondary {
+  background: linear-gradient(135deg, #2c3e50 0%, #22304a 100%);
+  color: #fff;
+}
+body[data-theme='dark'] .vale-badge {
+  background: linear-gradient(135deg, #20c997 0%, #235390 100%);
+  color: #fff;
+}
+body[data-theme='dark'] .status.accepts {
+  background: linear-gradient(135deg, #20c997 0%, #4f8cff 100%);
+  color: #fff;
+}
+body[data-theme='dark'] .status.not-accepts {
+  background: linear-gradient(135deg, #dc3545 0%, #235390 100%);
+  color: #fff;
+}
+body[data-theme='dark'] .app-footer {
+  background: linear-gradient(135deg, #22304a 0%, #1a2636 100%);
+  color: #e6e6e6;
+}
+body[data-theme='dark'] .info-icon,
+body[data-theme='dark'] .filter-icon,
+body[data-theme='dark'] .location-icon {
+  opacity: 0.85;
+  color: #4f8cff;
 }

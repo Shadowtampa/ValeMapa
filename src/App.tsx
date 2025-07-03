@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { usePlaces } from './hooks/usePlaces';
 import { Map } from './components/Map';
 import { PlaceDetails } from './components/PlaceDetails';
@@ -17,8 +17,18 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedValeBrands, setSelectedValeBrands] = useState<string[]>([]);
   const [searchRadius, setSearchRadius] = useState<number>(10);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    return localStorage.getItem('valemapa_theme') === 'dark' ? 'dark' : 'light';
+  });
 
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('valemapa_theme', theme);
+  }, [theme]);
 
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   // Função para calcular distância entre dois pontos (Haversine)
   function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
@@ -116,7 +126,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <div className="header-content">
-          <h1>🍽️ ValeMapa</h1>
+          <h1><span className="header-emoji">🍽️</span> ValeMapa</h1>
           <p>Localizador de lugares que aceitam Vale Alimentação</p>
         </div>
       </header>
@@ -168,6 +178,9 @@ function App() {
           entre em contato para adicionarmos ao mapa!
         </p>
       </footer>
+      <button className="fab-theme-toggle" onClick={toggleTheme} title="Alternar modo claro/escuro">
+        {theme === 'light' ? '🌙' : '☀️'}
+      </button>
     </div>
   );
 }
