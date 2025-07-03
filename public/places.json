@@ -153,7 +153,7 @@
       "city": "Santarém",
       "state": "PA",
       "coordinates": { "lat": -2.428783212710179, "lng": -54.7331464978685 },
-      "category": "supermercado",
+      "category": "pizzaria",
       "description": "A pizzaria oferece pizzas de vários sabores, além de salgados e doces, em ambiente familiar e descontraído.",
       "acceptsVale": true,
       "valeType": ["refeição"],
@@ -168,9 +168,24 @@
       "city": "Santarém",
       "state": "PA",
       "coordinates": { "lat": -2.4280664421487486, "lng": -54.74294015460663 },
-      "category": "supermercado",
+      "category": "padaria",
       "valeType": ["refeição"],
       "valeBrands": ["flash"]
+    },
+    {
+      "id": 13,
+      "name": "Gelateria Luci",
+      "address": "R. Lameira Bittencourt, 69 - Centro, Santarém - PA, 68005-010",
+      "city": "Santarém",
+      "state": "PA",
+      "coordinates": { "lat": -2.416197782400301, "lng": -54.711374818521655},
+      "category": "sorveteria",
+      "description": "Gelateria com sorvetes artesanais e doces.",
+      "acceptsVale": true,
+      "valeType": ["refeição"],
+      "valeBrands": ["flash"],
+      "phone": "",
+      "hours": ""
     }
   ]
 }
