@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { Place } from '../types/Place';
@@ -17,6 +17,24 @@ const defaultIcon = L.icon({
   shadowSize: [41, 41],
 });
 L.Marker.prototype.options.icon = defaultIcon;
+
+// Ícone SVG de casa para localização do usuário
+const houseSvg = encodeURIComponent(`
+<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'>
+  <g>
+    <circle cx='20' cy='20' r='18' fill='#1976d2' stroke='white' stroke-width='3'/>
+    <path d='M12 23 L20 15 L28 23 V30 H12 Z' fill='white' stroke='#1976d2' stroke-width='2'/>
+    <rect x='17' y='25' width='6' height='5' fill='#1976d2' stroke='white' stroke-width='1'/>
+  </g>
+</svg>
+`);
+const houseIcon = L.icon({
+  iconUrl: `data:image/svg+xml,${houseSvg}`,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40],
+  className: 'user-location-marker',
+});
 
 interface MapProps {
   places: Place[];
@@ -61,7 +79,7 @@ export const Map: React.FC<MapProps> = ({ places, selectedPlace, onPlaceSelect, 
         </Marker>
       ))}
       {userLocation && (
-        <Marker position={userLocation} icon={L.icon({ ...defaultIcon, iconUrl: iconUrl, iconAnchor: [12, 41], iconSize: [25, 41], className: 'user-location-marker' })}>
+        <Marker position={userLocation} icon={houseIcon}>
           <Popup>Sua localização</Popup>
         </Marker>
       )}

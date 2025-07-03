@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAppContext } from '../context/AppContext';
 
-interface UserLocationBoxProps {
-  onLocationChange: (lat: number, lng: number) => void;
-}
-
-export const UserLocationBox: React.FC<UserLocationBoxProps> = ({ onLocationChange }) => {
+export const UserLocationBox: React.FC = () => {
+  const { userLocation, setUserLocation } = useAppContext();
   const [address, setAddress] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [chosenLocation, setChosenLocation] = useState<{ lat: number; lng: number; address?: string } | null>(null);
   const [showForm, setShowForm] = useState(true);
+
+  // Sempre que userLocation mudar, refletir na UI
+  useEffect(() => {
+    if (userLocation) {
+      setChosenLocation({ lat: userLocation[0], lng: userLocation[1] });
+      setShowForm(false);
+    } else {
+      setShowForm(true);
+      setChosenLocation(null);
+    }
+  }, [userLocation]);
 
   const handleGetLocation = () => {
     setError(null);
@@ -22,7 +31,7 @@ export const UserLocationBox: React.FC<UserLocationBoxProps> = ({ onLocationChan
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setChosenLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-        onLocationChange(pos.coords.latitude, pos.coords.longitude);
+        setUserLocation([pos.coords.latitude, pos.coords.longitude]);
         setShowForm(false);
         setLoading(false);
       },
@@ -46,7 +55,7 @@ export const UserLocationBox: React.FC<UserLocationBoxProps> = ({ onLocationChan
         const lat = parseFloat(data[0].lat);
         const lng = parseFloat(data[0].lon);
         setChosenLocation({ lat, lng, address: data[0].display_name });
-        onLocationChange(lat, lng);
+        setUserLocation([lat, lng]);
         setShowForm(false);
       } else {
         setError('Endereço não encontrado. Tente ser mais específico.');
@@ -62,6 +71,7 @@ export const UserLocationBox: React.FC<UserLocationBoxProps> = ({ onLocationChan
     setShowForm(true);
     setError(null);
     setAddress('');
+    setUserLocation(null);
   };
 
   return (

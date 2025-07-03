@@ -17,6 +17,8 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const [selectedValeTypes, setSelectedValeTypes] = useState<string[]>([]);
+  const [selectedValeBrands, setSelectedValeBrands] = useState<string[]>([]);
+  const [searchRadius, setSearchRadius] = useState<number>(10);
 
   // Carregar preferências do localStorage ao iniciar
   useEffect(() => {
@@ -52,27 +54,47 @@ function App() {
     localStorage.setItem(LOCALSTORAGE_VALETYPES_KEY, JSON.stringify(selectedValeTypes));
   }, [selectedValeTypes]);
 
-  // Filtrar lugares baseado na busca, categoria e tipos de vale
+  // Função para calcular distância entre dois pontos (Haversine)
+  function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+    const toRad = (x: number) => x * Math.PI / 180;
+    const R = 6371; // km
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  // Filtrar lugares baseado na busca, categoria, tipos de vale, marcas de vale e raio
   const filteredPlaces = useMemo(() => {
-    let filtered = places;
-
-    // Filtro por categoria
-    if (selectedCategory !== 'todos') {
-      filtered = filterPlacesByCategory(selectedCategory);
-    }
-
-    // Filtro por tipos de vale
-    if (selectedValeTypes.length > 0) {
-      filtered = filterPlacesByValeTypes(selectedValeTypes).filter(p => filtered.includes(p));
-    }
-
-    // Busca
-    if (searchQuery.trim()) {
-      filtered = searchPlaces(searchQuery).filter(p => filtered.includes(p));
-    }
-
-    return filtered;
-  }, [places, selectedCategory, searchQuery, selectedValeTypes, filterPlacesByCategory, filterPlacesByValeTypes, searchPlaces]);
+    return places
+      .filter(place => selectedCategory === 'todos' || place.category === selectedCategory)
+      .filter(place => 
+        selectedValeTypes.length === 0 ||
+        selectedValeTypes.some(type => place.valeType.map(v => v.toLowerCase()).includes(type.toLowerCase()))
+      )
+      .filter(place =>
+        selectedValeBrands.length === 0 ||
+        selectedValeBrands.some(brand => (place.valeBrands || []).map(b => b.toLowerCase()).includes(brand.toLowerCase()))
+      )
+      .filter(place => {
+        if (!userLocation) return true;
+        const dist = haversineDistance(userLocation[0], userLocation[1], place.coordinates.lat, place.coordinates.lng);
+        return dist <= searchRadius;
+      })
+      .filter(place => {
+        if (!searchQuery.trim()) return true;
+        const lowerQuery = searchQuery.toLowerCase();
+        return (
+          place.name.toLowerCase().includes(lowerQuery) ||
+          place.address.toLowerCase().includes(lowerQuery) ||
+          place.city.toLowerCase().includes(lowerQuery) ||
+          place.description.toLowerCase().includes(lowerQuery)
+        );
+      });
+  }, [places, selectedCategory, searchQuery, selectedValeTypes, selectedValeBrands, userLocation, searchRadius]);
 
   const handlePlaceSelect = (place: Place) => {
     setSelectedPlace(place);
@@ -90,11 +112,20 @@ function App() {
     setSelectedValeTypes(valeTypes);
   };
 
+  const handleValeBrandsChange = (brands: string[]) => {
+    setSelectedValeBrands(brands);
+  };
+
   const handleLocationChange = (lat: number, lng: number) => {
     setUserLocation([lat, lng]);
   };
 
+  const handleSearchRadiusChange = (radius: number) => {
+    setSearchRadius(radius);
+  };
+
   const allValeTypes = getAllValeTypes();
+  const allValeBrands = Array.from(new Set(places.flatMap(place => place.valeBrands || [])));
 
   if (loading) {
     return (
@@ -138,6 +169,11 @@ function App() {
             valeTypes={allValeTypes}
             selectedValeTypes={selectedValeTypes}
             onValeTypesChange={handleValeTypesChange}
+            valeBrands={allValeBrands}
+            selectedValeBrands={selectedValeBrands}
+            onValeBrandsChange={handleValeBrandsChange}
+            searchRadius={searchRadius}
+            onSearchRadiusChange={handleSearchRadiusChange}
           />
           
           <div className="stats">

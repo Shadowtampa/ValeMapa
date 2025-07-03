@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import type { Category } from '../types/Place';
+import { useAppContext } from '../context/AppContext';
 
 interface SearchFiltersProps {
   onSearch: (query: string) => void;
-  onCategoryFilter: (category: Category) => void;
-  selectedCategory: Category;
   valeTypes: string[];
+  selectedCategory: Category;
+  onCategoryFilter: (category: Category) => void;
   selectedValeTypes: string[];
-  onValeTypesChange: (valeTypes: string[]) => void;
+  onValeTypesChange: (types: string[]) => void;
+  valeBrands: string[];
+  selectedValeBrands: string[];
+  onValeBrandsChange: (brands: string[]) => void;
+  searchRadius: number;
+  onSearchRadiusChange: (radius: number) => void;
 }
 
 export const SearchFilters: React.FC<SearchFiltersProps> = ({
   onSearch,
-  onCategoryFilter,
-  selectedCategory,
   valeTypes,
+  selectedCategory,
+  onCategoryFilter,
   selectedValeTypes,
-  onValeTypesChange
+  onValeTypesChange,
+  valeBrands,
+  selectedValeBrands,
+  onValeBrandsChange,
+  searchRadius,
+  onSearchRadiusChange
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -40,12 +51,26 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
   };
 
   const handleValeTypeChange = (type: string) => {
+    let newValeTypes: string[];
     if (selectedValeTypes.includes(type)) {
-      onValeTypesChange(selectedValeTypes.filter(t => t !== type));
+      newValeTypes = selectedValeTypes.filter(t => t !== type);
     } else {
-      onValeTypesChange([...selectedValeTypes, type]);
+      newValeTypes = [...selectedValeTypes, type];
     }
+    onValeTypesChange(newValeTypes);
   };
+
+  const handleValeBrandChange = (brand: string) => {
+    let newBrands: string[];
+    if (selectedValeBrands.includes(brand)) {
+      newBrands = selectedValeBrands.filter(b => b !== brand);
+    } else {
+      newBrands = [...selectedValeBrands, brand];
+    }
+    onValeBrandsChange(newBrands);
+  };
+
+  const radiusOptions = [1, 2, 5, 10, 20, 50];
 
   return (
     <div className="search-filters">
@@ -93,6 +118,34 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
           </div>
         </div>
       )}
+
+      {valeBrands.length > 0 && (
+        <div className="filters-section" style={{ marginTop: '1rem' }}>
+          <h3>Filtrar por marca do vale:</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+            {valeBrands.map(brand => (
+              <label key={brand} style={{ fontSize: '0.95rem', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={selectedValeBrands.includes(brand)}
+                  onChange={() => handleValeBrandChange(brand)}
+                  style={{ marginRight: '0.5rem' }}
+                />
+                {brand}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="filters-section">
+        <h3>Filtrar por raio de busca:</h3>
+        <select value={searchRadius} onChange={e => onSearchRadiusChange(Number(e.target.value))} style={{ marginBottom: '1rem', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ddd' }}>
+          {radiusOptions.map(opt => (
+            <option key={opt} value={opt}>{opt} km</option>
+          ))}
+        </select>
+      </div>
 
       <div className="info-section">
         <div className="info-card">

@@ -14,6 +14,7 @@
       "description": "Restaurante tradicional com pratos da culinária brasileira",
       "acceptsVale": true,
       "valeType": ["alimentação", "refeição"],
+      "valeBrands": ["flash", "ifood beneficios", "sodexo"],
       "phone": "(11) 9999-9999",
       "hours": "Seg-Sex: 11h-22h, Sáb-Dom: 12h-23h"
     },
@@ -31,6 +32,7 @@
       "description": "Padaria artesanal com pães frescos e doces caseiros",
       "acceptsVale": true,
       "valeType": ["alimentação"],
+      "valeBrands": ["flash", "ifood beneficios", "sodexo"],
       "phone": "(11) 8888-8888",
       "hours": "Seg-Sáb: 6h-20h, Dom: 7h-18h"
     },
@@ -48,6 +50,7 @@
       "description": "Supermercado com variedade de produtos e preços acessíveis",
       "acceptsVale": true,
       "valeType": ["alimentação"],
+      "valeBrands": ["flash", "ifood beneficios", "sodexo"],
       "phone": "(11) 7777-7777",
       "hours": "Seg-Sáb: 7h-22h, Dom: 8h-20h"
     },
@@ -65,6 +68,7 @@
       "description": "Café especializado com ambiente aconchegante",
       "acceptsVale": true,
       "valeType": ["alimentação"],
+      "valeBrands": ["flash", "ifood beneficios", "sodexo"],
       "phone": "(11) 6666-6666",
       "hours": "Seg-Sex: 7h-19h, Sáb-Dom: 8h-18h"
     },
@@ -82,8 +86,39 @@
       "description": "Pizzaria italiana autêntica com forno a lenha",
       "acceptsVale": true,
       "valeType": ["alimentação", "refeição"],
+      "valeBrands": ["flash", "ifood beneficios", "sodexo"],
       "phone": "(11) 5555-5555",
       "hours": "Ter-Dom: 18h-23h"
+    },
+    {
+      "id": 7,
+      "name": "Mercado do Bairro",
+      "address": "Av. Sérgio Henn, 1604",
+      "city": "Santarém",
+      "state": "PA",
+      "coordinates": { "lat": -2.433748, "lng": -54.719670 },
+      "category": "supermercado",
+      "description": "Parque da Cidade",
+      "acceptsVale": true,
+      "valeType": ["refeição"],
+      "valeBrands": ["flash"],
+      "phone": "",
+      "hours": ""
+    },
+    {
+      "id": 8,
+      "name": "Mercado do Bairro",
+      "address": "Av. Mendonça Furtado, 2486 - Aldeia, Santarém - PA, 68040-050",
+      "city": "Santarém",
+      "state": "PA",
+      "coordinates": { "lat": -2.4245881388235424, "lng": -54.72480658951951 },
+      "category": "supermercado",
+      "description": "Mercado do Bairro-Mendonça Furtado",
+      "acceptsVale": true,
+      "valeType": ["refeição"],
+      "valeBrands": ["flash"],
+      "phone": "",
+      "hours": ""
     }
   ]
 } 

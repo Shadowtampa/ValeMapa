@@ -52,6 +52,11 @@ export const PlaceDetails: React.FC<PlaceDetailsProps> = ({ place }) => {
         </div>
 
         <div className="info-item">
+          <strong>Categoria:</strong>
+          <p>{place.category}</p>
+        </div>
+
+        <div className="info-item">
           <strong>Telefone:</strong>
           <p>{place.phone}</p>
         </div>

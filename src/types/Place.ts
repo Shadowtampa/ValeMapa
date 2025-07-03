@@ -12,6 +12,7 @@ export interface Place {
   description: string;
   acceptsVale: boolean;
   valeType: string[];
+  valeBrands: string[];
   phone: string;
   hours: string;
 }
