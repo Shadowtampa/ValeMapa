@@ -1,0 +1,1 @@
+npm run build || { echo '❌ O build falhou! Corrija os erros antes de commitar.'; exit 1; } 

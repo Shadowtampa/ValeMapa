@@ -1,4 +1,4 @@
-import { vi, describe, it, expect, beforeEach } from 'vitest'
+import { vi, describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { Map } from '../Map'
 import type { Place } from '../../types/Place'
